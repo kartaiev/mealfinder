@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Meal Finder</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Meal Finder</h1>
+      <div class="flex">
+        <form class="flex" id="submit">
+          <input type="text" id="search" placeholder="search for meal" />
+          <button type="submit" id="search-btn" class="search-btn">
+            <i class="fas fa-search"></i>
+          </button>
+        </form>
+        <button class="random-btn" id="random">
+          <i class="fas fa-random"></i>
+        </button>
+      </div>
+      <div id="result-heading"></div>
+      <div id="meals" class="meals"></div>
+      <div id="single-meal"></div>
+    </div>
+    <script>
+      var dojoConfig = {
+        async: true,
+        packages: [
+          {
+            name: "modules",
+            location: location.pathname.replace(/\/[^/]*$/, "") + "/modules",
+          },
+        ],
+      };
+    </script>
+    <script src="//ajax.googleapis.com/ajax/libs/dojo/1.8.1/dojo/dojo.js"></script>
+    <script
+      src="https://kit.fontawesome.com/3fef0acd85.js"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      require(["dojo/dom", "dojo/on", "modules/fetchData", "dojo/domReady!"], (
+        dom,
+        on,
+        fetchData
+      ) => {
+        const form = dom.byId("submit");
+        const search = dom.byId("search");
+        const resultHeading = dom.byId("result-heading");
+        const mealsEl = dom.byId("meals");
+
+        on(form, "submit", (e) => {
+          e.preventDefault();
+          const value = search.value;
+          resultHeading.innerHTML = `<h2>Search results for ${value}:</h2>`;
+
+          fetchData.getMeals(value, mealsEl, search);
+        });
+      });
+    </script>
+  </body>
+</html>
