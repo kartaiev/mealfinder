@@ -52,11 +52,12 @@
         const mealsEl = dom.byId("meals");
 
         on(form, "submit", (e) => {
-          e.preventDefault();
           const value = search.value;
+          const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${value}`;
+          e.preventDefault();
           resultHeading.innerHTML = `<h2>Search results for ${value}:</h2>`;
 
-          fetchData.getMeals(value, mealsEl, search);
+          fetchData.getMeals(url, mealsEl, search);
         });
       });
     </script>
