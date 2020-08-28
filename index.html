@@ -7,6 +7,13 @@
     <title>Meal Finder</title>
   </head>
   <body>
+    <nav>
+      <ul>
+        <li><a href="#/meals/chicken">Chicken</a></li>
+        <li><a href="#/meals/eggs">Eggs</a></li>
+        <li><a href="#/meals/steak">Steak</a></li>
+      </ul>
+    </nav>
     <div class="container">
       <h1>Meal Finder</h1>
       <div class="flex">
@@ -41,23 +48,49 @@
       crossorigin="anonymous"
     ></script>
     <script>
-      require(["dojo/dom", "dojo/on", "modules/fetchData", "dojo/domReady!"], (
-        dom,
-        on,
-        fetchData
-      ) => {
+      require([
+        "dojo/dom",
+        "dojo/on",
+        "modules/fetchData",
+        "dojo/router",
+        "dojo/domReady!",
+      ], (dom, on, fetchData, router) => {
         const form = dom.byId("submit");
         const search = dom.byId("search");
         const resultHeading = dom.byId("result-heading");
         const mealsEl = dom.byId("meals");
 
-        on(form, "submit", (e) => {
-          const value = search.value;
+        const createMeals = (value) => {
           const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${value}`;
-          e.preventDefault();
           resultHeading.innerHTML = `<h2>Search results for ${value}:</h2>`;
 
-          fetchData.getMeals(url, mealsEl, search);
+          fetchData.getMeals(url).then(({ meals }) => {
+            mealsEl.innerHTML = meals
+              .map(
+                (meal) => `
+                <div class="meal">
+                    <img src="${meal.strMealThumb}" alt="${meal.strMeal}" />
+         
+                    <div class="meal-info" data-mealID="${meal.idMeal}">
+                        <h3>${meal.strMeal}</h3>
+                    </div>
+                </div>
+          `
+              )
+              .join("");
+          });
+        };
+
+        router.register("/meals/:title", (e) => {
+          e.preventDefault();
+          createMeals(e.params.title);
+        });
+
+        router.startup();
+
+        on(form, "submit", (e) => {
+          e.preventDefault();
+          createMeals(search.value);
         });
       });
     </script>
