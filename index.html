@@ -46,33 +46,13 @@
         "dojo/on",
         "modules/fetchData",
         "dojo/router",
+        "modules/create",
         "dojo/domReady!",
-      ], (dom, on, fetchData, router) => {
+      ], (dom, on, fetchData, router, create) => {
         const form = dom.byId("submit");
         const search = dom.byId("search");
         const resultHeading = dom.byId("result-heading");
         const mealsEl = dom.byId("meals");
-
-        const createMeals = (value) => {
-          const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${value}`;
-          resultHeading.innerHTML = `<h2>Search results for ${value}:</h2>`;
-
-          fetchData.getMeals(url).then(({ meals }) => {
-            mealsEl.innerHTML = meals
-              .map(
-                (meal) => `
-                <div class="meal">
-                    <img src="${meal.strMealThumb}" alt="${meal.strMeal}" />
-         
-                    <div class="meal-info" data-mealID="${meal.idMeal}">
-                        <h3>${meal.strMeal}</h3>
-                    </div>
-                </div>
-          `
-              )
-              .join("");
-          });
-        };
 
         router.register("/meals/:title", (e) => {
           on(form, "submit", (e) => {
@@ -80,7 +60,8 @@
             console.log(search.value);
             router.go(`/meals/${search.value}`);
           });
-          createMeals(e.params.title);
+          create.createMeals(e.params.title, resultHeading, mealsEl);
+          search.value = "";
         });
 
         router.startup();
