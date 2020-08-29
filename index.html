@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <link rel="icon" href="./favicon.ico" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
@@ -54,16 +55,16 @@
         const resultHeading = dom.byId("result-heading");
         const mealsEl = dom.byId("meals");
 
-        router.register("/meals/:title", (e) => {
-          on(form, "submit", (e) => {
-            e.preventDefault();
-            console.log(search.value);
-            router.go(`/meals/${search.value}`);
-          });
-          create.createMeals(e.params.title, resultHeading, mealsEl);
-          search.value = "";
+        router.register("/meals/:meal", (e) => {
+          create.createMeals(e.params.meal, resultHeading, mealsEl);
         });
 
+        on(form, "submit", (e) => {
+          e.preventDefault();
+          console.log(search.value);
+          router.go(`/meals/${search.value}`);
+          search.value = "";
+        });
         router.startup();
       });
     </script>
