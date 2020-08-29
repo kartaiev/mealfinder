@@ -23,7 +23,6 @@
       </div>
       <div id="result-heading"></div>
       <div id="meals" class="meals"></div>
-      <div id="single-meal"></div>
     </div>
     <script>
       var dojoConfig = {
@@ -48,23 +47,42 @@
         "modules/fetchData",
         "dojo/router",
         "modules/create",
+        "dojo/dom-attr",
         "dojo/domReady!",
-      ], (dom, on, fetchData, router, create) => {
+      ], (dom, on, fetchData, router, create, domAttr) => {
         const form = dom.byId("submit");
         const search = dom.byId("search");
         const resultHeading = dom.byId("result-heading");
         const mealsEl = dom.byId("meals");
+        let meal;
 
-        router.register("/meals/:meal", (e) => {
+        router.register("/meals/:meal/:id", (e) => {
           create.createMeals(e.params.meal, resultHeading, mealsEl);
+          create.createSingleMeal(e.params.id, resultHeading, mealsEl);
         });
 
         on(form, "submit", (e) => {
           e.preventDefault();
-          console.log(search.value);
-          router.go(`/meals/${search.value}`);
+          meal = search.value;
+          meal && router.go(`/meals/${meal}/#`);
           search.value = "";
         });
+
+        on(mealsEl, "click", (e) => {
+          e.preventDefault();
+          let mealInfo;
+          if (e.target.className === "meals") {
+            mealInfo = "";
+          } else {
+            mealInfo =
+              e.target.className === "meal-info"
+                ? e.target
+                : e.target.parentElement;
+          }
+          const id = mealInfo && domAttr.get(mealInfo, "data-mealID");
+          router.go(`/meals/${meal}/${id}`);
+        });
+
         router.startup();
       });
     </script>
