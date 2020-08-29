@@ -48,8 +48,9 @@
         "dojo/router",
         "modules/create",
         "dojo/dom-attr",
+        "dojo/dom-class",
         "dojo/domReady!",
-      ], (dom, on, fetchData, router, create, domAttr) => {
+      ], (dom, on, fetchData, router, create, domAttr, domClass) => {
         const form = dom.byId("submit");
         const search = dom.byId("search");
         const resultHeading = dom.byId("result-heading");
@@ -57,6 +58,9 @@
         let meal;
 
         router.register("/meals/:meal/:id", (e) => {
+          e.params.id === "#"
+            ? domClass.remove(mealsEl, "recipe")
+            : domClass.add(mealsEl, "recipe");
           create.createMeals(e.params.meal, resultHeading, mealsEl);
           create.createSingleMeal(e.params.id, resultHeading, mealsEl);
         });

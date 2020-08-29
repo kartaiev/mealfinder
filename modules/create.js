@@ -1,4 +1,4 @@
-define(["modules/fetchData", "dojo/dom-construct"], (fetchData, construct) => {
+define(["modules/fetchData"], (fetchData) => {
   return {
     createMeals: (value, node1, node2) => {
       const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${value}`;
@@ -26,13 +26,13 @@ define(["modules/fetchData", "dojo/dom-construct"], (fetchData, construct) => {
       fetchData.getMeals(url).then(({ meals }) => {
         const meal = meals[0];
         node1.innerHTML = `<h2>${meal.strMeal} recipe:</h2>`;
-        // construct.place(
-        //   `<div class="meal">
-        //     <img src="${meal.strMealThumb}"/>
-        //   </div>`,
-        //   node2,
-        //   "replace"
-        // );
+        node2.innerHTML = `
+        <div class="meal">
+        <img src="${meal.strMealThumb}"/>
+        </div>
+        <p>${meal.strCategory}</p>
+        <p>${meal.strArea}</p>
+        `;
       });
     },
   };

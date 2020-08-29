@@ -87,6 +87,11 @@ i {
   margin-top: 20px;
 }
 
+.recipe {
+  display: flex;
+  flex-direction: column;
+}
+
 .meal {
   width: 180px;
   height: 180px;
