@@ -7,13 +7,6 @@
     <title>Meal Finder</title>
   </head>
   <body>
-    <nav>
-      <ul>
-        <li><a href="#/meals/chicken">Chicken</a></li>
-        <li><a href="#/meals/eggs">Eggs</a></li>
-        <li><a href="#/meals/steak">Steak</a></li>
-      </ul>
-    </nav>
     <div class="container">
       <h1>Meal Finder</h1>
       <div class="flex">
@@ -82,16 +75,15 @@
         };
 
         router.register("/meals/:title", (e) => {
-          e.preventDefault();
+          on(form, "submit", (e) => {
+            e.preventDefault();
+            console.log(search.value);
+            router.go(`/meals/${search.value}`);
+          });
           createMeals(e.params.title);
         });
 
         router.startup();
-
-        on(form, "submit", (e) => {
-          e.preventDefault();
-          createMeals(search.value);
-        });
       });
     </script>
   </body>
