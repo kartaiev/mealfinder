@@ -76,7 +76,10 @@
         on(mealsEl, "click", (e) => {
           e.preventDefault();
           let mealInfo;
-          if (e.target.className === "meals") {
+          if (
+            e.target.className === "meals" ||
+            e.target.className === "recipe-img"
+          ) {
             mealInfo = "";
           } else {
             mealInfo =
@@ -85,7 +88,7 @@
                 : e.target.parentElement;
           }
           const id = mealInfo && domAttr.get(mealInfo, "data-mealID");
-          router.go(`/meals/${meal}/${id}`);
+          id && router.go(`/meals/${meal}/${id}`);
         });
 
         on(randomBtn, "click", (e) => {

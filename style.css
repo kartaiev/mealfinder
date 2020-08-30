@@ -103,15 +103,20 @@ i {
   width: 100%;
 }
 
-.meal {
+.meal,
+.recipe-img {
   width: 180px;
   height: 180px;
   position: relative;
   text-align: center;
+}
+
+.meal {
   cursor: pointer;
 }
 
-.meal img {
+.meal img,
+.recipe-img img {
   width: 100%;
   height: 100%;
   border: 4px solid #6f4a8e;

@@ -34,7 +34,7 @@ define(["modules/fetchData"], (fetchData) => {
         const meal = meals[0];
         node1.innerHTML = `<h2>${meal.strMeal} recipe:</h2>`;
         node2.innerHTML = `
-          <div class="meal">
+          <div class="recipe-img">
             <img src="${meal.strMealThumb}"/>
           </div>
           <div class="recipe-info">
