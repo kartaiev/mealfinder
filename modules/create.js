@@ -8,13 +8,12 @@ define(["modules/fetchData"], (fetchData) => {
         node2.innerHTML = meals
           .map(
             (meal) => `
-                  <div class="meal">
-                      <img src="${meal.strMealThumb}" alt="${meal.strMeal}" />
-
-                      <div class="meal-info" data-mealID="${meal.idMeal}">
-                          <h3 class="meal-title">${meal.strMeal}</h3>
-                      </div>
-                  </div>
+              <div class="meal">
+                <img src="${meal.strMealThumb}" alt="${meal.strMeal}" />
+                <div class="meal-info" data-mealID="${meal.idMeal}">
+                  <h3 class="meal-title">${meal.strMeal}</h3>
+                </div>
+              </div>
             `
           )
           .join("");
@@ -25,13 +24,19 @@ define(["modules/fetchData"], (fetchData) => {
 
       fetchData.getMeals(url).then(({ meals }) => {
         const meal = meals[0];
+        console.log(meal);
         node1.innerHTML = `<h2>${meal.strMeal} recipe:</h2>`;
         node2.innerHTML = `
-        <div class="meal">
-        <img src="${meal.strMealThumb}"/>
+          <div class="meal">
+            <img src="${meal.strMealThumb}"/>
+          </div>
+          <div class="recipe-info">
+            ${meal.strCategory ? `<p>Category: ${meal.strCategory}</p>` : ""}
+            ${meal.strArea ? `<p>Area: ${meal.strArea}</p>` : ""}
+          </div>
+        <div class="recipe-discription">
+          <p>${meal.strInstructions}</p>
         </div>
-        <p>${meal.strCategory}</p>
-        <p>${meal.strArea}</p>
         `;
       });
     },

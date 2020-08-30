@@ -90,6 +90,13 @@ i {
 .recipe {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.recipe-description {
+  width: 100%;
+  text-align: left;
 }
 
 .meal {
