@@ -91,7 +91,7 @@
         on(randomBtn, "click", (e) => {
           create
             .createRandomMeals()
-            .then((id) => router.go(`/meals/${meal}/${id}`));
+            .then(({ id, category }) => router.go(`/meals/${category}/${id}`));
         });
 
         router.startup();

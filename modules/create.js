@@ -23,8 +23,8 @@ define(["modules/fetchData"], (fetchData) => {
       const url = "https://www.themealdb.com/api/json/v1/1/random.php";
       return fetchData.getMeals(url).then(({ meals }) => {
         const meal = meals[0];
-        console.log(meal);
-        return meal.idMeal;
+        const data = { id: meal.idMeal, category: meal.strCategory };
+        return data;
       });
     },
     createSingleMeal: (id, node1, node2) => {
