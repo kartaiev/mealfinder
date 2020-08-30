@@ -19,12 +19,18 @@ define(["modules/fetchData"], (fetchData) => {
           .join("");
       });
     },
+    createRandomMeals: () => {
+      const url = "https://www.themealdb.com/api/json/v1/1/random.php";
+      return fetchData.getMeals(url).then(({ meals }) => {
+        const meal = meals[0];
+        return meal.idMeal;
+      });
+    },
     createSingleMeal: (id, node1, node2) => {
       const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
 
       fetchData.getMeals(url).then(({ meals }) => {
         const meal = meals[0];
-        console.log(meal);
         node1.innerHTML = `<h2>${meal.strMeal} recipe:</h2>`;
         node2.innerHTML = `
           <div class="meal">

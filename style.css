@@ -85,6 +85,7 @@ i {
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 20px;
   margin-top: 20px;
+  margin-bottom: 50px;
 }
 
 .recipe {
@@ -96,7 +97,6 @@ i {
 
 .recipe-description {
   width: 100%;
-  text-align: left;
 }
 
 .meal {

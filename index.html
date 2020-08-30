@@ -55,6 +55,7 @@
         const search = dom.byId("search");
         const resultHeading = dom.byId("result-heading");
         const mealsEl = dom.byId("meals");
+        const randomBtn = dom.byId("random");
         let meal;
 
         router.register("/meals/:meal/:id", (e) => {
@@ -85,6 +86,12 @@
           }
           const id = mealInfo && domAttr.get(mealInfo, "data-mealID");
           router.go(`/meals/${meal}/${id}`);
+        });
+
+        on(randomBtn, "click", (e) => {
+          create
+            .createRandomMeals()
+            .then((id) => router.go(`/meals/${meal}/${id}`));
         });
 
         router.startup();
